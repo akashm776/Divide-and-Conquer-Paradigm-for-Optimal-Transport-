@@ -462,7 +462,7 @@ public class Traditional {
           freePoints--;
       }
       validateDualWeights();
-      printFlow();
+      //printFlow();
       return getTransportCost();
     } catch (Exception e) {
       e.printStackTrace();

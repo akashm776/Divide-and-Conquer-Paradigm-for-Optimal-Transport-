@@ -132,8 +132,8 @@ public class Runner {
   {
       for(int i = 0; i < A.size(); i++)
       {
-        System.out.println(A.get(i));
-        System.out.println(B.get(i));
+        //System.out.println(A.get(i));
+        //System.out.println(B.get(i));
         if( A.get(i).getCapacity() < 0)
         {
           System.out.println(A.get(i));
@@ -166,18 +166,37 @@ public class Runner {
   /**
    * Prints the cost matrix
    */
-  static void printCostMatrix() {
+  static void printCostMatrix() throws IOException {
+    FileWriter fw = new FileWriter("out.txt");
+    BufferedWriter bw = new BufferedWriter(fw);
+
     if (costMatrix == null) {
       System.out.println("Cost Matrix is not yet initialized");
+      bw.close();
       return;
     }
-    System.out.println("Cost Matrix:");
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
         System.out.print(costMatrix[i][j] + " ");
+        bw.write(costMatrix[i][j] + " ");
       }
       //System.out.println();
     }
+    System.out.println();
+    bw.newLine();
+    for(int i = 0; i < N; i++)
+    {
+      System.out.print(A.get(i).getCapacity() + " ");
+      bw.write(A.get(i).getCapacity() + " ");
+    }
+    System.out.println();
+    bw.newLine();
+    for(int i = 0; i < N; i++)
+    {
+      System.out.print(B.get(i).getCapacity() + " ");
+      bw.write(B.get(i).getCapacity() + " ");
+    }
+    bw.close();
   }
 
   static void run() throws Exception{
@@ -185,8 +204,8 @@ public class Runner {
     B = new ArrayList<>();
     costMatrix = new double[N][N];
     Point p;
-    double supplies[] = generateRandomCapacities(3000, 10);
-    double demand[] = generateRandomCapacities(3000, 10);
+    double supplies[] = generateRandomCapacities(30000, 100);
+    double demand[] = generateRandomCapacities(30000, 100);
 
     if (generateRandomPoints) {
       // Generate n points for the set A
@@ -228,8 +247,8 @@ public class Runner {
       }
       for(int i = 0; i < A.size(); i++)
       {
-        A.get(i).setCapacity(1);
-        B.get(i).setCapacity(1);
+        A.get(i).setCapacity(supplies[i]);
+        B.get(i).setCapacity(demand[i]);
       }
       // Double sum1 = 0d;
       // Double sum2 = 0d;
@@ -296,9 +315,10 @@ public class Runner {
       for (int j = 0; j < N; j++) {
         costMatrix[i][j] = getDistance(A.get(i), B.get(j)); //The distance between given point A and given point B 
         //System.out.println("The cost of [" + i + "][" + (N+j) +"] = " + costMatrix[i][j] );
-
       }
     }
+    printCostMatrix();
+    System.out.println();
    // System.out.println();
 
     long startTime, endTime;

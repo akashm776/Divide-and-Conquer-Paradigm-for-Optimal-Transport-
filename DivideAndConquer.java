@@ -905,7 +905,7 @@ public class DivideAndConquer {
       }
       //validateMatching();
       validateDualWeights();
-      printFlow();
+      //printFlow();
       return getTransportCost();
     } catch (Exception e) {
       e.printStackTrace();
